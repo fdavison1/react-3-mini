@@ -52,6 +52,17 @@ class App extends Component {
   sellCar(id) {
     // axios (DELETE)
     // setState with response -> vehiclesToDisplay
+    axios
+    .delete(`https://joes-autos.herokuapp.com/api/vehicles/${id}`)
+    .then(res => {
+      console.log(res)
+      this.setState({vehiclesToDisplay: res.data.vehicles})
+      toast.success(`Car Sold!`)
+    })
+    .catch(err => {
+      console.log(err)
+      toast.error(`Your car cannot be sold.`)
+    })
   }
 
   filterByMake() {
@@ -95,6 +106,17 @@ class App extends Component {
 
     // axios (POST)
     // setState with response -> vehiclesToDisplay
+    axios.
+    post(`https://joes-autos.herokuapp.com/api/vehicles`, newCar)
+    .then(res => {
+      // console.log(res)
+      this.setState({vehiclesToDisplay: res.data.vehicles})
+      toast.success(`Added your ${newCar.make} ${newCar.model}`)
+    })
+    .catch(err => {
+      // console.log(err)
+      toast.error('Failed to add car')
+    })
   }
 
   addBuyer() {
