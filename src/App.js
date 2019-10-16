@@ -26,6 +26,7 @@ class App extends Component {
     this.resetData = this.resetData.bind(this);
     this.byYear = this.byYear.bind(this);
     this.deleteBuyer = this.deleteBuyer.bind(this);
+    // this.updatePrice = this.updatePrice.bind(this)
   }
 
   getVehicles() {
@@ -36,6 +37,10 @@ class App extends Component {
       this.setState({
         vehiclesToDisplay: res.data 
       })
+      toast.success('Got all vehicles')
+    })
+    .catch(err => {
+      toast.error('Something went wrong')
     })
   }
 
@@ -66,6 +71,17 @@ class App extends Component {
   updatePrice(priceChange, id) {
     // axios (PUT)
     // setState with response -> vehiclesToDisplay
+    axios
+    .put(`https://joes-autos.herokuapp.com/api/vehicles/${id}/${priceChange}`)
+    .then(res => {
+      // console.log(res)
+      this.setState({vehiclesToDisplay: res.data.vehicles})
+      toast.success('Price Changed')
+    })
+    .catch(err => {
+      // console.log(err)
+      toast.error('Failed to change price')
+    })
   }
 
   addCar() {
